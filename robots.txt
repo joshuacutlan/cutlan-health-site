@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cutlanhealth.com/sitemap.xml
