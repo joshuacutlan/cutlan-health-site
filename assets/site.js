@@ -30,6 +30,7 @@ function render(){
    h+='<input id="f_email" type="email" placeholder="Email" autocomplete="email">';
    h+='<input id="f_phone" type="tel" placeholder="Phone" autocomplete="tel">';
    h+='<input id="f_state" placeholder="Your state" autocomplete="address-level1">';
+   h+='<select id="f_found"><option value="">How did you find me? (optional)</option><option>Google search</option><option>ChatGPT, Claude, or another AI</option><option>Google Maps / reviews</option><option>A friend or family member</option><option>Social media</option><option>Other</option></select>';
    h+='<label class="consent"><input type="checkbox" id="f_consent"><span>I agree to be contacted by phone, text, or email about my request. Consent is not a condition of purchase.</span></label>';
    h+='<button class="btn btn-gold full" id="msubmit">Get My Free Quote →</button>';
    h+='<div class="m-nav"><button class="m-back" id="mback">← Back</button><span></span></div>';
@@ -61,12 +62,13 @@ function submit(){
  var err=document.getElementById('merr');
  if(!name||!email||!phone||!consent){err.style.display='block';return;}
  data.name=name;data.email=email;data.phone=phone;data.state=state;
+ var found=document.getElementById('f_found').value,page=location.pathname;
  var btn=document.getElementById('msubmit');btn.textContent='Sending…';btn.disabled=true;
  var msg="New quote request from cutlanhealth.com\n\n"+
    "Name: "+name+"\nEmail: "+email+"\nPhone: "+phone+"\nState: "+(state||"—")+"\n\n"+
-   "Coverage: "+(data.coverage||"—")+"\nWho for: "+(data.who||"—")+"\nTiming: "+(data.timing||"—")+"\nAge range: "+(data.age||"—");
+   "Coverage: "+(data.coverage||"—")+"\nWho for: "+(data.who||"—")+"\nTiming: "+(data.timing||"—")+"\nAge range: "+(data.age||"—")+"\n\nFound me via: "+(found||"—")+"\nPage: "+page;
  var payload={access_key:W3F_KEY,subject:"New Quote Request — "+name,from_name:"Cutlan Health Solutions Website",
-   name:name,email:email,phone:phone,state:state,coverage:data.coverage,who_for:data.who,timing:data.timing,age_range:data.age,message:msg};
+   name:name,email:email,phone:phone,state:state,coverage:data.coverage,who_for:data.who,timing:data.timing,age_range:data.age,found_via:found,page:page,message:msg};
  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
   .then(function(r){return r.json();})
   .then(function(res){ if(res.success){done(name);} else {btn.textContent='Get My Free Quote →';btn.disabled=false;err.textContent='Something went wrong — please call or text (813) 601-6884.';err.style.display='block';} })
