@@ -158,6 +158,9 @@
 .article ul,.article ol{margin:0 0 16px 22px;}
 .article li{margin-bottom:8px;}
 .article a{color:var(--gold2);text-decoration:underline;text-underline-offset:3px;}
+.article a.btn{text-decoration:none;}
+.article a.btn-gold{color:#0f0b02;}
+.article a.btn-ghost{color:var(--gold3);}
 .article strong{color:#fff;}
 .short{background:linear-gradient(160deg,#14100a,#0c0c11);border:1px solid var(--line2);border-radius:18px;padding:20px 22px;margin:8px 0 10px;}
 .short .eyebrow{display:block;margin-bottom:6px;}
